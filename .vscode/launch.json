@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AuthenticationApplication<authentication>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.voatads.authentication.AuthenticationApplication",
+            "projectName": "authentication",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
