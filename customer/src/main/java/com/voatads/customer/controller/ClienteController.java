@@ -2,11 +2,8 @@ package com.voatads.customer.controller;
 
 import com.voatads.customer.dto.CustomerDTO;
 import com.voatads.customer.dto.UpdateCustomerDTO;
-import com.voatads.customer.model.Address;
 import com.voatads.customer.model.Customer;
-import com.voatads.customer.repository.AddressRepository;
 import com.voatads.customer.service.CustomerService;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/customers")
@@ -36,7 +34,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable Long id){
+    public ResponseEntity<Customer> getCustomer(@PathVariable UUID id){
         try{
             Customer customer = customerService.getCustomer(id);
             if (customer != null){
@@ -73,7 +71,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> saveCustomer(@PathVariable Long id, @RequestBody CustomerDTO updatedCustomerDTO){
+    public ResponseEntity<Customer> saveCustomer(@PathVariable UUID id, @RequestBody CustomerDTO updatedCustomerDTO){
         try{
             Customer updatedCustomer = customerService.updateCustomer(id, updatedCustomerDTO);
             if (updatedCustomer != null) {
@@ -87,7 +85,7 @@ public class ClienteController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomerFields(@PathVariable Long id, @RequestBody UpdateCustomerDTO updates) {
+    public ResponseEntity<Customer> updateCustomerFields(@PathVariable UUID id, @RequestBody UpdateCustomerDTO updates) {
         try {
             Customer updatedCustomer = customerService.updateCustomerFields(id, updates);
             if (updatedCustomer != null) {
@@ -101,7 +99,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> removeCustomer(@PathVariable Long id){
+    public ResponseEntity<String> removeCustomer(@PathVariable UUID id){
         try{
             String message = customerService.removerCustomer(id);
             return ResponseEntity.ok(message);

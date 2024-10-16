@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -24,7 +25,7 @@ public class CustomerService {
     @Autowired
     private AddressRepository addressRepository;
 
-    public Customer getCustomer(Long id){
+    public Customer getCustomer(UUID id){
         Optional<Customer> customer = customerRepository.findById(id);
         return customer.orElse(null);
     }
@@ -49,7 +50,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer updateCustomer(Long id, CustomerDTO customerDTO) {
+    public Customer updateCustomer(UUID id, CustomerDTO customerDTO) {
         Customer existingCustomer = getCustomer(id);
         if (existingCustomer != null) {
             existingCustomer.setName(customerDTO.getName());
@@ -69,7 +70,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer updateCustomerFields(Long id, UpdateCustomerDTO updates) {
+    public Customer updateCustomerFields(UUID id, UpdateCustomerDTO updates) {
         Customer existingCustomer = getCustomer(id);
         if (existingCustomer != null) {
             if (updates.getName() != null) existingCustomer.setName(updates.getName());
@@ -90,7 +91,7 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public String removerCustomer(Long id){
+    public String removerCustomer(UUID id){
         customerRepository.deleteById(id);
         return "Customer removed with the id: " + id;
     }

@@ -2,9 +2,11 @@ package com.voatads.customer.dto;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class AddressDTO {
-    private Long id;
+    private UUID id;
     private String street;
     private String complement;
     private String zip;
