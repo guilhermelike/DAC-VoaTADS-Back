@@ -17,11 +17,11 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/customers")
 @CrossOrigin(origins = "*")
-public class ClienteController {
+public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    private static final Logger logger = LoggerFactory.getLogger(ClienteController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers(){
@@ -101,7 +101,7 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> removeCustomer(@PathVariable UUID id){
         try{
-            String message = customerService.removerCustomer(id);
+            String message = customerService.removeCustomer(id);
             return ResponseEntity.ok(message);
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

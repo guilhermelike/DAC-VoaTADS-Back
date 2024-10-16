@@ -91,7 +91,7 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public String removerCustomer(UUID id){
+    public String removeCustomer(UUID id){
         customerRepository.deleteById(id);
         return "Customer removed with the id: " + id;
     }

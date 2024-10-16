@@ -1,4 +1,4 @@
-package com.voatads.customer.model;
+package com.voatads.employee.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,18 +11,14 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "customer", schema = "customer")
+@Table(name = "employee", schema = "employee")
 @Data
-public class Customer {
+public class Employee {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(updatable = false, nullable = false)
     private UUID id;
-
-    @OneToOne
-    @JoinColumn(name="id_address")
-    private Address address;
 
     @Column(name = "cpf")
     private String cpf;
@@ -33,6 +29,6 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "miles")
-    private Double miles;
+    @Column(name = "number")
+    private String number;
 }

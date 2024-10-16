@@ -24,7 +24,7 @@ public class CustomerDTO {
         @Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}")
         private String cpf;
 
-        private double miles;
+        private Double miles;
 
         private AddressDTO address;
 }
