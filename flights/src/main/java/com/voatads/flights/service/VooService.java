@@ -30,4 +30,39 @@ public class VooService {
         Voo voo = vooRepository.findById(id).orElseThrow(() -> new RuntimeException("Voo não encontrado"));
         return modelMapper.map(voo, VooDTO.class);
     }
+
+    public VooDTO createVoo(VooDTO vooDTO) {
+        Voo voo = modelMapper.map(vooDTO, Voo.class);
+        Voo savedVoo = vooRepository.save(voo);
+        return modelMapper.map(savedVoo, VooDTO.class);
+    }
+
+    public VooDTO updateVoo(UUID id, VooDTO vooDTO) {
+        Voo existingVoo = vooRepository.findById(id).orElseThrow(() -> new RuntimeException("Voo não encontrado"));
+        modelMapper.map(vooDTO, existingVoo); // Atualiza campos com valores de vooDTO
+        Voo updatedVoo = vooRepository.save(existingVoo);
+        return modelMapper.map(updatedVoo, VooDTO.class);
+    }
+
+    public VooDTO partialUpdateVoo(UUID id, VooDTO vooDTO) {
+        Voo existingVoo = vooRepository.findById(id).orElseThrow(() -> new RuntimeException("Voo não encontrado"));
+
+        // Atualização parcial: verifica se cada campo está presente em vooDTO antes de atualizar
+        if (vooDTO.getCodigoVoo() != null) existingVoo.setCodigoVoo(vooDTO.getCodigoVoo());
+        if (vooDTO.getDataVoo() != null) existingVoo.setDataVoo(vooDTO.getDataVoo());
+        if (vooDTO.getHorarioVoo() != null) existingVoo.setHorarioVoo(vooDTO.getHorarioVoo());
+        if (vooDTO.getAeroportoOrigem() != null) existingVoo.setAeroportoOrigem(vooDTO.getAeroportoOrigem());
+        if (vooDTO.getAeroportoDestino() != null) existingVoo.setAeroportoDestino(vooDTO.getAeroportoDestino());
+        if (vooDTO.getValorPassagem() != null) existingVoo.setValorPassagem(vooDTO.getValorPassagem());
+        if (vooDTO.getValorMilhas() != null) existingVoo.setValorMilhas(vooDTO.getValorMilhas());
+        if (vooDTO.getQtdPoltronas() != null) existingVoo.setQtdPoltronas(vooDTO.getQtdPoltronas());
+
+        Voo updatedVoo = vooRepository.save(existingVoo);
+        return modelMapper.map(updatedVoo, VooDTO.class);
+    }
+
+    public void deleteVoo(UUID id) {
+        Voo existingVoo = vooRepository.findById(id).orElseThrow(() -> new RuntimeException("Voo não encontrado"));
+        vooRepository.delete(existingVoo);
+    }
 }
