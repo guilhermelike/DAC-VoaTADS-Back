@@ -2,11 +2,28 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BookingApplication",
+            "request": "launch",
+            "mainClass": "com.voatads.booking.BookingApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-AuthenticationApplication<authentication>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "mainClass": "com.voatads.authentication.AuthenticationApplication",
             "projectName": "authentication",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BookingApplication<booking>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.voatads.booking.BookingApplication",
+            "projectName": "booking",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.voatads.authentication.dto.AuthDTO;
 import com.voatads.authentication.model.Auth;
 import com.voatads.authentication.security.EncryptPassword;
 import com.voatads.authentication.services.AuthService;
@@ -26,22 +27,22 @@ public class AuthController {
     // Senha criptografada SHA256+SALT
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Auth auth) {
+    public ResponseEntity<Auth> login(@RequestBody AuthDTO auth) {
         try {
             // Procurar auth pelo login
             Auth authUser = authService.findAuthByLogin(auth.getLogin());
             if (authUser == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 // Comparar senhas
                 Boolean verificatedPassword = EncryptPassword.verifyPassword(auth.getPassword(), authUser.getPassword(), authUser.getSalt());
                 if (verificatedPassword) {
-                    return ResponseEntity.ok().body("Login realizado com sucesso");
+                    return ResponseEntity.ok().body(authUser);
                 }
             }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credencial inválida. Verifique sua senha e tente novamente");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error: " + e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -53,10 +54,10 @@ public class AuthController {
             String encryptedPassword = EncryptPassword.encryptPassword(auth.getPassword(), salt);
             auth.setPassword(encryptedPassword);
             Auth authEntity = authService.createLogin(auth);
-            if (authEntity == null) {
+            if (authEntity != null) {
                 return ResponseEntity.status(HttpStatus.CREATED).body("Login criado com sucesso");
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Login criado com sucesso"); // Ver status code
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Resquest"); // Ver status code
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error: " + e );
         }
@@ -72,6 +73,7 @@ public class AuthController {
         }
     }
     
+    // Revisar código
     @PutMapping("login/{id}")
     public ResponseEntity<String> updateAuth(@PathVariable UUID idUser, @RequestBody Auth auth) {
         try {
