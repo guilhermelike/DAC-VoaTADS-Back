@@ -63,7 +63,7 @@ public class EmployeeController {
             Employee createdEmployee = employeeService.createEmployee(employeeDTO);
 
             logger.debug("Funcionário criado com sucesso: {}", createdEmployee);
-            return ResponseEntity.ok(createdEmployee);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
         } catch (Exception e){
             logger.error("Erro ao criar funcionário: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
