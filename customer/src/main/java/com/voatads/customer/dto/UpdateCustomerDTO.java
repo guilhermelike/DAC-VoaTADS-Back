@@ -4,9 +4,13 @@ import lombok.Data;
 
 @Data
 public class UpdateCustomerDTO {
-    private String name;
-    private String email;
-    private String cpf;
-    private Double miles;
-    private AddressDTO address;
+        private String name;
+        private String email;
+        private String street;
+        private String number;
+        private String complement;
+        private String zipCode;
+        private String city;
+        private String state;
+        private Double miles;
 }

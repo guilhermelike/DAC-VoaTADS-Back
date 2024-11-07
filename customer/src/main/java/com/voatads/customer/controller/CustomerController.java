@@ -2,7 +2,10 @@ package com.voatads.customer.controller;
 
 import com.voatads.customer.dto.CustomerDTO;
 import com.voatads.customer.dto.UpdateCustomerDTO;
+import com.voatads.customer.dto.TransactionDTO;
 import com.voatads.customer.model.Customer;
+import com.voatads.customer.model.Transaction;
+import com.voatads.customer.model.TransactionType;
 import com.voatads.customer.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/customers")
-@CrossOrigin(origins = "*") // Permite requisições de qualquer origem
+@CrossOrigin(origins = "*")
 public class CustomerController {
     @Autowired
     CustomerService customerService;
@@ -62,7 +65,7 @@ public class CustomerController {
 
             Customer createdCustomer = customerService.createCustomer(customerDTO);
             logger.debug("Cliente criado com sucesso: {}", createdCustomer);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer); // Retorna 201 Created
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
         } catch (Exception e) {
             logger.error("Erro ao criar cliente: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -109,4 +112,63 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @PostMapping("/{id}/transactions")
+    public ResponseEntity<Transaction> createTransaction(@PathVariable UUID id, @RequestBody TransactionDTO transactionDTO) {
+        try {
+            transactionDTO.setCustomerId(id);
+            Transaction createdTransaction = customerService.createTransaction(transactionDTO);
+            if (createdTransaction != null) {
+                return ResponseEntity.status(HttpStatus.CREATED).body(createdTransaction);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao criar transação para o cliente com ID {}: ", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<List<Transaction>> getTransactionsByCustomer(@PathVariable UUID id) {
+        try {
+            List<Transaction> transactions = customerService.getTransactionsByCustomer(id);
+            if (transactions != null && !transactions.isEmpty()) {
+                return ResponseEntity.ok(transactions);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao obter transações para o cliente com ID {}: ", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PatchMapping("/{id}/miles/buy")
+    public ResponseEntity<String> buyMiles(@PathVariable UUID id, @RequestBody TransactionDTO transactionDTO) {
+        Customer updatedCustomer = customerService.updateMiles(id, transactionDTO.getMiles(), true);
+        if (updatedCustomer != null) {
+            transactionDTO.setCustomerId(id);
+            transactionDTO.setType(String.valueOf(TransactionType.ENTRADA));
+            customerService.createTransaction(transactionDTO);
+            return ResponseEntity.status(201).body("Miles added successfully");
+        } else {
+            return ResponseEntity.status(500).body("Error adding miles");
+        }
+    }
+
+    @PatchMapping("/{id}/miles/use")
+    public ResponseEntity<String> useMiles(@PathVariable UUID id, @RequestBody TransactionDTO transactionDTO) {
+        Customer updatedCustomer = customerService.updateMiles(id, transactionDTO.getMiles(), false);
+        if (updatedCustomer != null) {
+            transactionDTO.setCustomerId(id);
+            transactionDTO.setType(String.valueOf(TransactionType.SAIDA));
+            customerService.createTransaction(transactionDTO);
+            return ResponseEntity.status(201).body("Miles used successfully");
+        } else {
+            return ResponseEntity.status(500).body("Error using miles");
+        }
+    }
+
+
 }
