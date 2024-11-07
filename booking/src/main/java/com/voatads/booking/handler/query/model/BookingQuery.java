@@ -1,4 +1,4 @@
-package com.voatads.booking.model;
+package com.voatads.booking.handler.query.model;
 
 import java.util.UUID;
 
@@ -9,8 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "booking", schema = "booking")
-public class Booking {
+@Table(name = "booking", schema = "bookingquery")
+public class BookingQuery {
 
     @Id
     @GeneratedValue(generator = "UUID")
