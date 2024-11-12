@@ -50,12 +50,13 @@ public class VooService {
         // Atualização parcial: verifica se cada campo está presente em vooDTO antes de atualizar
         if (vooDTO.getCodigoVoo() != null) existingVoo.setCodigoVoo(vooDTO.getCodigoVoo());
         if (vooDTO.getDataVoo() != null) existingVoo.setDataVoo(vooDTO.getDataVoo());
-        if (vooDTO.getHorarioVoo() != null) existingVoo.setHorarioVoo(vooDTO.getHorarioVoo());
         if (vooDTO.getAeroportoOrigem() != null) existingVoo.setAeroportoOrigem(vooDTO.getAeroportoOrigem());
         if (vooDTO.getAeroportoDestino() != null) existingVoo.setAeroportoDestino(vooDTO.getAeroportoDestino());
         if (vooDTO.getValorPassagem() != null) existingVoo.setValorPassagem(vooDTO.getValorPassagem());
         if (vooDTO.getValorMilhas() != null) existingVoo.setValorMilhas(vooDTO.getValorMilhas());
-        if (vooDTO.getQtdPoltronas() != null) existingVoo.setQtdPoltronas(vooDTO.getQtdPoltronas());
+        if (vooDTO.getTotalPoltronas() != null) existingVoo.setTotalPoltronas(vooDTO.getTotalPoltronas());
+        if (vooDTO.getQtdPoltronasOcupadas() != null) existingVoo.setQtdPoltronasOcupadas(vooDTO.getQtdPoltronasOcupadas());
+        if (vooDTO.getStatusVoo() != null) existingVoo.setStatusVoo(vooDTO.getStatusVoo());
 
         Voo updatedVoo = vooRepository.save(existingVoo);
         return modelMapper.map(updatedVoo, VooDTO.class);

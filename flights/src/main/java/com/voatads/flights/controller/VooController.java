@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/voos")
+@RequestMapping("/flights")
 public class VooController {
 
     @Autowired

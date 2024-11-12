@@ -53,6 +53,9 @@ public class AuthController {
             auth.setSalt(salt);
             String encryptedPassword = EncryptPassword.encryptPassword(auth.getPassword(), salt);
             auth.setPassword(encryptedPassword);
+            // Relacionar id e type do usuário ao login
+            auth.setIdUser(auth.getIdUser());
+            auth.setType("2");
             Auth authEntity = authService.createLogin(auth);
             if (authEntity != null) {
                 return ResponseEntity.status(HttpStatus.CREATED).body("Login criado com sucesso");

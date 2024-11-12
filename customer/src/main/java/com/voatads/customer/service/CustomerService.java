@@ -29,6 +29,7 @@ public class CustomerService {
 
     public Customer getCustomer(UUID id){
         Optional<Customer> customer = customerRepository.findById(id);
+        System.out.println(customer);
         return customer.orElse(null);
     }
 

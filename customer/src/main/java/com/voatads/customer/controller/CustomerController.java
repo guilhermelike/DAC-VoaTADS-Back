@@ -56,13 +56,14 @@ public class CustomerController {
     public ResponseEntity<Customer> createCustomer(@RequestBody CustomerDTO customerDTO) {
         logger.debug("Iniciando método createCustomer");
         try {
+            System.out.println(customerDTO);
             logger.debug("Recebido CustomerDTO: {}", customerDTO);
 
             if (customerDTO == null) {
                 logger.error("CustomerDTO é nulo.");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
-
+            customerDTO.setMiles(0.0);
             Customer createdCustomer = customerService.createCustomer(customerDTO);
             logger.debug("Cliente criado com sucesso: {}", createdCustomer);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);

@@ -38,7 +38,7 @@ public class Customer {
     @Column(name = "complement")
     private String complement;
 
-    @Column(name = "zip_code", nullable = false)
+    @Column(name = "zip_code")
     private String zipCode;
 
     @Column(name = "city", nullable = false)

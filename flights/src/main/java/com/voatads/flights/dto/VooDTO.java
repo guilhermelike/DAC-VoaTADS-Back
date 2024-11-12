@@ -3,8 +3,7 @@ package com.voatads.flights.dto;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -12,11 +11,12 @@ public class VooDTO {
 
     private UUID id;
     private String codigoVoo;
-    private LocalDate dataVoo;
-    private LocalTime horarioVoo;
+    private LocalDateTime dataVoo;
     private String aeroportoOrigem;
     private String aeroportoDestino;
     private BigDecimal valorPassagem;
     private BigDecimal valorMilhas;
-    private Integer qtdPoltronas;
+    private Integer totalPoltronas;
+    private Integer qtdPoltronasOcupadas;
+    private String statusVoo;
 }
