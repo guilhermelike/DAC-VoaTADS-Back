@@ -1,12 +1,13 @@
 package com.voatads.booking.dto;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class BookingDTO {
+public class BookingDTO implements Serializable {
     private UUID id;
-    private String cod_booking;
-    private String cod_flight;
-    private String time_booking;
+    private String codBooking;
+    private String codFlight;
+    private String timeBooking;
     private String status;
 
     public UUID getId() {
@@ -18,27 +19,27 @@ public class BookingDTO {
     }
     
     public String getCodBooking() {
-        return cod_booking;
+        return codBooking;
     }
 
-    public void setCodBooking(String cod_booking) {
-        this.cod_booking = cod_booking;
+    public void setCodBooking(String codBooking) {
+        this.codBooking = codBooking;
     }
     
     public String getCodFlight() {
-        return cod_flight;
+        return codFlight;
     }
     
-    public void setCodFlight(String cod_flight) {
-        this.cod_flight = cod_flight;
+    public void setCodFlight(String codFlight) {
+        this.codFlight = codFlight;
     }
     
     public String getTimeBooking() {
-        return time_booking;
+        return timeBooking;
     }
     
-    public void setTimeBooking(String time_booking) {
-        this.time_booking = time_booking;
+    public void setTimeBooking(String timeBooking) {
+        this.timeBooking = timeBooking;
     }
     
     public String getStatus() {
@@ -47,5 +48,16 @@ public class BookingDTO {
     
     public void setStatus(String status) {
         this.status = status;
-    } 
+    }
+
+    @Override
+    public String toString() {
+        return "BookingCommand{" +
+            "id=" + id +
+            ", codBooking='" + codBooking + '\'' +
+            ", codFlight='" + codFlight + '\'' +
+            ", timeBooking='" + timeBooking + '\'' +
+            ", status='" + status + '\'' +
+            '}';
+}
 }

@@ -63,4 +63,15 @@ public class BookingCommand {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    @Override
+    public String toString() {
+        return "BookingCommand{" +
+                "id=" + id +
+                ", codBooking='" + codBooking + '\'' +
+                ", codFlight='" + codFlight + '\'' +
+                ", timeBooking='" + timeBooking + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

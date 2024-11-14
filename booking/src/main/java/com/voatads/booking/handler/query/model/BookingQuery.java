@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class BookingQuery {
 
     @Id
-    @GeneratedValue(generator = "UUID")
+    // @GeneratedValue(generator = "UUID")
     private UUID id;
     @Column
     private String codBooking;
