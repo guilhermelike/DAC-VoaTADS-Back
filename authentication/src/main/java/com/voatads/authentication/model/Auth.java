@@ -16,9 +16,9 @@ public class Auth {
     private String salt;
     private UUID id_user;
 
-    public Auth(String login, String password, String type, String salt, UUID id_user) {
+    public Auth(UUID login, String password, String type, String salt, UUID id_user) {
         this.id = UUID.randomUUID();
-        this.login = login;
+        this.login = String.valueOf(login);
         this.password = password;
         this.type = type;
         this.salt = salt;
