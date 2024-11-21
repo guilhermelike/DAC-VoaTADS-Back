@@ -26,7 +26,8 @@
             "mainClass": "com.voatads.booking.BookingApplication",
             "projectName": "booking",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=37347 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=booking"
         },
         {
             "type": "java",
@@ -46,6 +47,17 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.voatads.flights.FlightsApplication",
             "projectName": "flights",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=43931 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=flights"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-EmployeeApplication<employee>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.voatads.employee.EmployeeApplication",
+            "projectName": "employee",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
