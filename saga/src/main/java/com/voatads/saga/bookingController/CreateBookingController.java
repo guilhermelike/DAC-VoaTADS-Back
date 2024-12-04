@@ -27,9 +27,9 @@ public class CreateBookingController {
     public ResponseEntity<CreateBookingDTO> eventCreateBooking(@RequestBody CreateBookingDTO createBookingDTO) {
         try {
             System.out.println("Esta em controller: ");
-            //createBookingProducer.deductSeatFlight(createBookingDTO);
+            createBookingProducer.deductSeatFlight(createBookingDTO);
             createBookingProducer.createBooking(createBookingDTO);
-            //createBookingProducer.deductMilesCustomer(createBookingDTO);
+            createBookingProducer.deductMilesCustomer(createBookingDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(createBookingDTO);
         } catch (Exception e) {
             logger.error("Erro ao criar reserva: {}", e.getMessage());
