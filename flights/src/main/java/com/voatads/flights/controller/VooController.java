@@ -1,6 +1,7 @@
 package com.voatads.flights.controller;
 
 import com.voatads.flights.dto.VooDTO;
+import com.voatads.flights.model.Airport;
 import com.voatads.flights.service.VooService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 @RestController
 @RequestMapping("/flights")
@@ -19,6 +26,21 @@ public class VooController {
     @GetMapping
     public ResponseEntity<List<VooDTO>> getAllVoos() {
         List<VooDTO> voos = vooService.getAllVoos();
+        return ResponseEntity.ok(voos);
+    }
+
+    @GetMapping("/airports")
+    public ResponseEntity<List<Airport>> getAirports() {
+        List<Airport> airports = vooService.getAllAirports();
+        System.out.println("Aeroportos:");
+        System.out.println(airports);
+        return ResponseEntity.ok(airports);
+    }
+
+    @PostMapping("/travels")
+    public ResponseEntity<List<VooDTO>> getTravels(@RequestBody VooDTO vooDTO) {
+        System.out.println("FlightDTO: " + vooDTO);
+        List<VooDTO> voos = vooService.getFilterVoos(vooDTO.getAeroportoOrigem(), vooDTO.getAeroportoDestino());
         return ResponseEntity.ok(voos);
     }
 
@@ -51,4 +73,7 @@ public class VooController {
         vooService.deleteVoo(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    
 }

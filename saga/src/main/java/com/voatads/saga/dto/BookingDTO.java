@@ -1,20 +1,14 @@
-package com.voatads.booking.dto;
+package com.voatads.saga.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class BookingDTO implements Serializable {
     private UUID id;
     private String codBooking;
     private String codFlight;
-    private LocalDateTime timeBooking;
+    private String timeBooking;
     private String status;
-    
-//     "codFlight": "TADS103"
-// "idUser": "e1c347    private Timestamp timeBooking;cc-056b-4a76-b371-262eae7140b0"
-// "qtdMilhas": 0
-// "qtdPassagens": 1
 
     public UUID getId() {
         return id;
@@ -40,11 +34,11 @@ public class BookingDTO implements Serializable {
         this.codFlight = codFlight;
     }
     
-    public LocalDateTime getTimeBooking() {
+    public String getTimeBooking() {
         return timeBooking;
     }
-
-    public void setTimeBooking(LocalDateTime timeBooking) {
+    
+    public void setTimeBooking(String timeBooking) {
         this.timeBooking = timeBooking;
     }
     

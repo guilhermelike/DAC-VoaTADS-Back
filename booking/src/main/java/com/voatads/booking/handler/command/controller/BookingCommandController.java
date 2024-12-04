@@ -24,6 +24,7 @@ public class BookingCommandController {
     @Autowired
     BookingCommandService bookingCommandService;
 
+    // Usar saga para a criação da reserva
     @PostMapping("/bookings")
     public ResponseEntity<BookingCommand> createBooking(@RequestBody BookingDTO bookingDTO) {
         try {

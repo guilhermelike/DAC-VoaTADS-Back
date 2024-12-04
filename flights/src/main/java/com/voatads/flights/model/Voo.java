@@ -5,9 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.UUID;
 
 @Data
@@ -21,7 +19,7 @@ public class Voo {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "codigo_voo", nullable = false)
+    @Column(name = "codigo_voo", nullable = false, unique = true)
     private String codigoVoo;
 
     @Column(name = "data_voo", nullable = false)

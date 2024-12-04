@@ -1,7 +1,10 @@
 package com.voatads.flights.service;
 
+import com.voatads.flights.dto.CreateBookingVooDTO;
 import com.voatads.flights.dto.VooDTO;
+import com.voatads.flights.model.Airport;
 import com.voatads.flights.model.Voo;
+import com.voatads.flights.repository.AirportRepository;
 import com.voatads.flights.repository.VooRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,32 @@ public class VooService {
     private VooRepository vooRepository;
 
     @Autowired
+    private AirportRepository airportRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     public List<VooDTO> getAllVoos() {
         return vooRepository.findAll().stream()
                 .map(voo -> modelMapper.map(voo, VooDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    public List<Airport> getAllAirports() {
+        return airportRepository.findAll();
+    }
+
+    public List<VooDTO> getFilterVoos(String aeroportoOrigem, String aeroportoDestino) {
+        System.out.println("Service");
+        System.err.println(aeroportoOrigem);
+        System.out.println(aeroportoDestino);
+        List<VooDTO> voos = vooRepository.findByAeroportoOrigemAndAeroportoDestino(aeroportoOrigem, aeroportoDestino)
+                .stream()
+                .map(voo -> modelMapper.map(voo, VooDTO.class))
+                .collect(Collectors.toList());
+        System.out.println("Viajens encontradas:");
+        System.out.println(voos);
+        return voos;
     }
 
     public VooDTO getVooById(UUID id) {
@@ -65,5 +88,18 @@ public class VooService {
     public void deleteVoo(UUID id) {
         Voo existingVoo = vooRepository.findById(id).orElseThrow(() -> new RuntimeException("Voo não encontrado"));
         vooRepository.delete(existingVoo);
+    }
+
+    public VooDTO addSeat(CreateBookingVooDTO codFlight) {
+        Voo existingVoo = vooRepository.findByCodigoVoo(codFlight.getCodFlight());
+        int seatsToAdd = existingVoo.getQtdPoltronasOcupadas() + codFlight.getQtdPassagens();
+        if (seatsToAdd > existingVoo.getTotalPoltronas()) {
+            Voo updatedVoo = vooRepository.save(existingVoo);
+            return modelMapper.map(updatedVoo, VooDTO.class);
+        } else {
+            existingVoo.setQtdPoltronasOcupadas(seatsToAdd);
+            Voo updatedVoo = vooRepository.save(existingVoo);
+            return modelMapper.map(updatedVoo, VooDTO.class);
+        }
     }
 }

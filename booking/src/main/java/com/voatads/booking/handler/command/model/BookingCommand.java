@@ -1,5 +1,6 @@
 package com.voatads.booking.handler.command.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -19,10 +20,11 @@ public class BookingCommand {
     private String codBooking;
     @Column
     private String codFlight;
-    @Column
-    private String timeBooking;
+    @Column(name = "timeBooking", nullable = false, columnDefinition = "TIMESTAMP")
+    private LocalDateTime timeBooking;
     @Column
     private String status;
+
 
     public UUID getId() {
         return id;
@@ -48,11 +50,11 @@ public class BookingCommand {
         this.codFlight = codFlight;
     }
     
-    public String getTimeBooking() {
+    public LocalDateTime getTimeBooking() {
         return timeBooking;
     }
-    
-    public void setTimeBooking(String timeBooking) {
+
+    public void setTimeBooking(LocalDateTime timeBooking) {
         this.timeBooking = timeBooking;
     }
     
