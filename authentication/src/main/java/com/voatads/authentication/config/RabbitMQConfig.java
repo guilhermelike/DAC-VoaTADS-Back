@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String EMPLOYEE_QUEUE = "employeeQueue";
+    public static final String EMPLOYEE_QUEUE = "create.employee.queue";
     public static final String CREATE_CUSTOMER_QUEUE = "create.customer.queue";
     public static final String CREATE_AUTH_QUEUE = "create.auth.queue";
 

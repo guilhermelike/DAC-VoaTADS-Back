@@ -17,6 +17,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue createEmployeeQueue() {
+        return new Queue("create.employee.queue", false);
+    }
+
+    @Bean
     public Queue createBookingQueue() {
         return new Queue("create.booking.queue", false);
     }
