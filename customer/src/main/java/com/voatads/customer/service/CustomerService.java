@@ -1,5 +1,6 @@
 package com.voatads.customer.service;
 
+import com.voatads.customer.dto.CreateCustomerDTO;
 import com.voatads.customer.dto.CustomerDTO;
 import com.voatads.customer.dto.UpdateCustomerDTO;
 import com.voatads.customer.dto.TransactionDTO;
@@ -7,6 +8,7 @@ import com.voatads.customer.model.Customer;
 import com.voatads.customer.model.Transaction;
 import com.voatads.customer.repository.CustomerRepository;
 import com.voatads.customer.repository.TransactionRepository;
+import com.voatads.customer.producer.CreateCustomerProducer;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class CustomerService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private CreateCustomerProducer createCustomerProducer;
+
     public Customer getCustomer(UUID id){
         Optional<Customer> customer = customerRepository.findById(id);
         System.out.println(customer);
@@ -37,6 +42,8 @@ public class CustomerService {
     public Customer createCustomer(CustomerDTO customerDTO){
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         customerRepository.save(customer);
+        CreateCustomerDTO createCustomerDTO = modelMapper.map(customer, CreateCustomerDTO.class);
+        createCustomerProducer.createCustomer(createCustomerDTO); // Enviar mensagem para criar auth
         return customerRepository.findById(customer.getId()).orElse(null);
     }
 
@@ -99,5 +106,4 @@ public class CustomerService {
         }
         return null;
     }
-
 }

@@ -1,5 +1,6 @@
 package com.voatads.authentication.services;
 
+import com.voatads.authentication.dto.AuthDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,14 @@ public class AuthService {
         return authRepository.findById(id).get();
     }
 
-    public Auth createLogin(Auth auth) {
+    public Auth createLogin(AuthDTO authDTO) {
+        Auth auth = new Auth();
+        auth.setId(authDTO.getId());
+        auth.setLogin(authDTO.getLogin());
+        auth.setPassword(authDTO.getPassword());
+        auth.setType(authDTO.getType());
+        auth.setSalt(authDTO.getSalt());
+        auth.setIdUser(authDTO.getIdUser());
         return authRepository.save(auth);
     }
 

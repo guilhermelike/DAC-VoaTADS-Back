@@ -5,7 +5,6 @@ import com.voatads.customer.dto.UpdateCustomerDTO;
 import com.voatads.customer.dto.TransactionDTO;
 import com.voatads.customer.model.Customer;
 import com.voatads.customer.model.Transaction;
-import com.voatads.customer.model.TransactionType;
 import com.voatads.customer.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +20,10 @@ import java.util.UUID;
 @RequestMapping("/customers")
 @CrossOrigin(origins = "*")
 public class CustomerController {
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+
     @Autowired
     CustomerService customerService;
-
-    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
@@ -144,32 +143,4 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @PatchMapping("/{id}/miles/buy")
-    public ResponseEntity<String> buyMiles(@PathVariable UUID id, @RequestBody TransactionDTO transactionDTO) {
-        Customer updatedCustomer = customerService.updateMiles(id, transactionDTO.getMiles(), true);
-        if (updatedCustomer != null) {
-            transactionDTO.setCustomerId(id);
-            transactionDTO.setType(String.valueOf(TransactionType.ENTRADA));
-            customerService.createTransaction(transactionDTO);
-            return ResponseEntity.status(201).body("Miles added successfully");
-        } else {
-            return ResponseEntity.status(500).body("Error adding miles");
-        }
-    }
-
-    @PatchMapping("/{id}/miles/use")
-    public ResponseEntity<String> useMiles(@PathVariable UUID id, @RequestBody TransactionDTO transactionDTO) {
-        Customer updatedCustomer = customerService.updateMiles(id, transactionDTO.getMiles(), false);
-        if (updatedCustomer != null) {
-            transactionDTO.setCustomerId(id);
-            transactionDTO.setType(String.valueOf(TransactionType.SAIDA));
-            customerService.createTransaction(transactionDTO);
-            return ResponseEntity.status(201).body("Miles used successfully");
-        } else {
-            return ResponseEntity.status(500).body("Error using miles");
-        }
-    }
-
-
 }
