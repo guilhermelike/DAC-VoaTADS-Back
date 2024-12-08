@@ -34,6 +34,10 @@ public class CustomerService {
         return customer.orElse(null);
     }
 
+    public Customer getCustomerByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
     @Transactional
     public Customer createCustomer(CreateCustomerDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);

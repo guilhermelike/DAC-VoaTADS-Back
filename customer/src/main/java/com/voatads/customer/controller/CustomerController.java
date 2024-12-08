@@ -51,6 +51,21 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Customer> getCustomerByEmail(@PathVariable String email) {
+        try {
+            Customer customer = customerService.getCustomerByEmail(email);
+            if (customer != null) {
+                return ResponseEntity.ok(customer);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao obter cliente com email {}: ", email, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Customer> saveCustomer(@PathVariable UUID id, @RequestBody CustomerDTO updatedCustomerDTO) {
         try {

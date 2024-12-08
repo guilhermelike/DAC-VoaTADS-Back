@@ -47,6 +47,21 @@ public class EmployeeController {
         }
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Employee> getEmployeeByEmail(@PathVariable String email) {
+        try {
+            Employee employee = employeeService.getEmployeeByEmail(email);
+            if (employee != null) {
+                return ResponseEntity.ok(employee);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao obter funcionário com email {}: ", email, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeDTO employeeDTO){
         logger.debug("Iniciando método createEmployee");

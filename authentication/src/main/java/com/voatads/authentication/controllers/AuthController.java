@@ -29,7 +29,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Auth> login(@RequestBody AuthDTO auth) {
         try {
-            // Procurar auth pelo login
+            // Procurar auth pelo email
             Auth authUser = authService.findAuthByLogin(auth.getLogin());
             if (authUser == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

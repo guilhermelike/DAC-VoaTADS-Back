@@ -25,6 +25,7 @@ public class CreateCustomerConsumer {
         try {
             String salt = EncryptPassword.createSaltForPassword();
             logger.info("Senha recebida para cadastro: {}", messageReceived.getPassword());
+            logger.info("ID recebido para cadastro: {}", messageReceived.getId());
             String encryptedPassword = EncryptPassword.encryptPassword(messageReceived.getPassword(), salt); // Utilize a senha recebida
             AuthDTO authDTO = new AuthDTO(messageReceived.getEmail(), encryptedPassword, "2", salt, messageReceived.getId());
             authService.createLogin(authDTO);
