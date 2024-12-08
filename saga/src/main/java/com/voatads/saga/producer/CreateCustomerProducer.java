@@ -25,4 +25,14 @@ public class CreateCustomerProducer {
             logger.error("Erro ao enviar mensagem para criar cliente: {}", createCustomerDTO, e);
         }
     }
+
+    public void createAuth(CreateCustomerDTO createCustomerDTO) {
+        try {
+            logger.info("Enviando mensagem para criar auth: {}", createCustomerDTO);
+            rabbitTemplate.convertAndSend("create.auth.queue", createCustomerDTO);
+            logger.info("Mensagem enviada com sucesso para criar auth: {}", createCustomerDTO);
+        } catch (Exception e) {
+            logger.error("Erro ao enviar mensagem para criar auth: {}", createCustomerDTO, e);
+        }
+    }
 }

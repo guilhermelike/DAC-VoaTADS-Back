@@ -13,6 +13,7 @@ public class RabbitMQConfig {
     public static final String EMPLOYEE_QUEUE = "create.employee.queue";
     public static final String CREATE_CUSTOMER_QUEUE = "create.customer.queue";
     public static final String CREATE_AUTH_QUEUE = "create.auth.queue";
+    public static final String SAGA_CUSTOMER_SUCCESS_QUEUE = "saga.customer.success.queue";
 
     @Bean
     public Queue employeeQueue() {
@@ -27,6 +28,11 @@ public class RabbitMQConfig {
     @Bean
     public Queue createAuthQueue() {
         return new Queue(CREATE_AUTH_QUEUE, false);
+    }
+
+    @Bean
+    public Queue sagaCustomerSuccessQueue() {
+        return new Queue(SAGA_CUSTOMER_SUCCESS_QUEUE, false);
     }
 
     @Bean

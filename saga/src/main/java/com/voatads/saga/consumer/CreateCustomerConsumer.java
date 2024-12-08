@@ -17,7 +17,7 @@ public class CreateCustomerConsumer {
     @Autowired
     CreateAuthProducer createAuthProducer;
 
-    @RabbitListener(queues = "create.customer.queue")
+    @RabbitListener(queues = "saga.customer.success.queue")
     public void createAuthForCustomer(CreateCustomerDTO messageReceived) {
         logger.info("Recebido em saga consumer: {}", messageReceived);
         try {

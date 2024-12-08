@@ -39,11 +39,9 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer createCustomer(CustomerDTO customerDTO){
+    public Customer createCustomer(CreateCustomerDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         customerRepository.save(customer);
-        CreateCustomerDTO createCustomerDTO = modelMapper.map(customer, CreateCustomerDTO.class);
-        createCustomerProducer.createCustomer(createCustomerDTO); // Enviar mensagem para criar auth
         return customerRepository.findById(customer.getId()).orElse(null);
     }
 

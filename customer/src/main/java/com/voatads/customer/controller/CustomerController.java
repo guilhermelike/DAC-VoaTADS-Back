@@ -51,27 +51,6 @@ public class CustomerController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Customer> createCustomer(@RequestBody CustomerDTO customerDTO) {
-        logger.debug("Iniciando método createCustomer");
-        try {
-            System.out.println(customerDTO);
-            logger.debug("Recebido CustomerDTO: {}", customerDTO);
-
-            if (customerDTO == null) {
-                logger.error("CustomerDTO é nulo.");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-            customerDTO.setMiles(0.0);
-            Customer createdCustomer = customerService.createCustomer(customerDTO);
-            logger.debug("Cliente criado com sucesso: {}", createdCustomer);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
-        } catch (Exception e) {
-            logger.error("Erro ao criar cliente: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Customer> saveCustomer(@PathVariable UUID id, @RequestBody CustomerDTO updatedCustomerDTO) {
         try {

@@ -37,6 +37,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue sagaCustomerSuccessQueue() {
+        return new Queue("saga.customer.success.queue", false);
+    }
+
+    @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
