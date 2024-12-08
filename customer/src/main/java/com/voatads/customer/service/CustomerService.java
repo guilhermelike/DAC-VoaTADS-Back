@@ -8,7 +8,6 @@ import com.voatads.customer.model.Customer;
 import com.voatads.customer.model.Transaction;
 import com.voatads.customer.repository.CustomerRepository;
 import com.voatads.customer.repository.TransactionRepository;
-import com.voatads.customer.producer.CreateCustomerProducer;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,6 @@ public class CustomerService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-
-    @Autowired
-    private CreateCustomerProducer createCustomerProducer;
 
     public Customer getCustomer(UUID id){
         Optional<Customer> customer = customerRepository.findById(id);

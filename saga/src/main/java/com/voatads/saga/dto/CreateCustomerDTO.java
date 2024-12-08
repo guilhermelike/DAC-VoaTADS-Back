@@ -15,6 +15,7 @@ public class CreateCustomerDTO implements Serializable {
     private String city;
     private String state;
     private Double miles;
+    private String password;
 
     public UUID getId() {
         return id;
@@ -102,5 +103,13 @@ public class CreateCustomerDTO implements Serializable {
 
     public void setMiles(Double miles) {
         this.miles = miles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
