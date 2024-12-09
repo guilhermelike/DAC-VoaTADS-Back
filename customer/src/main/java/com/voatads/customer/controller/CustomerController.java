@@ -5,7 +5,6 @@ import com.voatads.customer.dto.UpdateCustomerDTO;
 import com.voatads.customer.dto.TransactionDTO;
 import com.voatads.customer.model.Customer;
 import com.voatads.customer.model.Transaction;
-import com.voatads.customer.model.TransactionType;
 import com.voatads.customer.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +20,10 @@ import java.util.UUID;
 @RequestMapping("/customers")
 @CrossOrigin(origins = "*")
 public class CustomerController {
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+
     @Autowired
     CustomerService customerService;
-
-    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
@@ -52,23 +51,17 @@ public class CustomerController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Customer> createCustomer(@RequestBody CustomerDTO customerDTO) {
-        logger.debug("Iniciando método createCustomer");
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Customer> getCustomerByEmail(@PathVariable String email) {
         try {
-            System.out.println(customerDTO);
-            logger.debug("Recebido CustomerDTO: {}", customerDTO);
-
-            if (customerDTO == null) {
-                logger.error("CustomerDTO é nulo.");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            Customer customer = customerService.getCustomerByEmail(email);
+            if (customer != null) {
+                return ResponseEntity.ok(customer);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
-            customerDTO.setMiles(0.0);
-            Customer createdCustomer = customerService.createCustomer(customerDTO);
-            logger.debug("Cliente criado com sucesso: {}", createdCustomer);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
         } catch (Exception e) {
-            logger.error("Erro ao criar cliente: ", e);
+            logger.error("Erro ao obter cliente com email {}: ", email, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -144,32 +137,4 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @PatchMapping("/{id}/miles/buy")
-    public ResponseEntity<String> buyMiles(@PathVariable UUID id, @RequestBody TransactionDTO transactionDTO) {
-        Customer updatedCustomer = customerService.updateMiles(id, transactionDTO.getMiles(), true);
-        if (updatedCustomer != null) {
-            transactionDTO.setCustomerId(id);
-            transactionDTO.setType(String.valueOf(TransactionType.ENTRADA));
-            customerService.createTransaction(transactionDTO);
-            return ResponseEntity.status(201).body("Miles added successfully");
-        } else {
-            return ResponseEntity.status(500).body("Error adding miles");
-        }
-    }
-
-    @PatchMapping("/{id}/miles/use")
-    public ResponseEntity<String> useMiles(@PathVariable UUID id, @RequestBody TransactionDTO transactionDTO) {
-        Customer updatedCustomer = customerService.updateMiles(id, transactionDTO.getMiles(), false);
-        if (updatedCustomer != null) {
-            transactionDTO.setCustomerId(id);
-            transactionDTO.setType(String.valueOf(TransactionType.SAIDA));
-            customerService.createTransaction(transactionDTO);
-            return ResponseEntity.status(201).body("Miles used successfully");
-        } else {
-            return ResponseEntity.status(500).body("Error using miles");
-        }
-    }
-
-
 }

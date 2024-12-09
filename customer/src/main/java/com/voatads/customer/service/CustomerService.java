@@ -1,5 +1,6 @@
 package com.voatads.customer.service;
 
+import com.voatads.customer.dto.CreateCustomerDTO;
 import com.voatads.customer.dto.CustomerDTO;
 import com.voatads.customer.dto.UpdateCustomerDTO;
 import com.voatads.customer.dto.TransactionDTO;
@@ -33,8 +34,12 @@ public class CustomerService {
         return customer.orElse(null);
     }
 
+    public Customer getCustomerByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
     @Transactional
-    public Customer createCustomer(CustomerDTO customerDTO){
+    public Customer createCustomer(CreateCustomerDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         customerRepository.save(customer);
         return customerRepository.findById(customer.getId()).orElse(null);
@@ -99,5 +104,4 @@ public class CustomerService {
         }
         return null;
     }
-
 }

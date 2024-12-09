@@ -29,7 +29,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Auth> login(@RequestBody AuthDTO auth) {
         try {
-            // Procurar auth pelo login
+            // Procurar auth pelo email
             Auth authUser = authService.findAuthByLogin(auth.getLogin());
             if (authUser == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -47,16 +47,16 @@ public class AuthController {
     }
 
     @PostMapping("/login/create")
-    public ResponseEntity<String> createLogin(@RequestBody Auth auth) {
+    public ResponseEntity<String> createLogin(@RequestBody AuthDTO authDTO) {
         try {
             String salt = EncryptPassword.createSaltForPassword();
-            auth.setSalt(salt);
-            String encryptedPassword = EncryptPassword.encryptPassword(auth.getPassword(), salt);
-            auth.setPassword(encryptedPassword);
+            authDTO.setSalt(salt);
+            String encryptedPassword = EncryptPassword.encryptPassword(authDTO.getPassword(), salt);
+            authDTO.setPassword(encryptedPassword);
             // Relacionar id e type do usuário ao login
-            auth.setIdUser(auth.getIdUser());
-            auth.setType("2");
-            Auth authEntity = authService.createLogin(auth);
+            authDTO.setIdUser(authDTO.getIdUser());
+            authDTO.setType("2");
+            Auth authEntity = authService.createLogin(authDTO);
             if (authEntity != null) {
                 return ResponseEntity.status(HttpStatus.CREATED).body("Login criado com sucesso");
             }

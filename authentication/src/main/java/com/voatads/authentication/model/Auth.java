@@ -25,6 +25,10 @@ public class Auth {
         this.id_user = id_user;
     }
 
+    public Auth() {
+
+    }
+
     public UUID getId() {
         return id;
     }

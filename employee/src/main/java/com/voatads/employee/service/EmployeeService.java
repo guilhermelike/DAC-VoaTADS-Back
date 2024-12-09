@@ -49,6 +49,10 @@ public class EmployeeService {
         return employeeRepository.findById(employee.getId()).orElse(null);
     }
 
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
+
     @Transactional
     public Employee updateEmployee(UUID id, EmployeeDTO employeeDTO) {
         Employee existingEmployee = getEmployee(id);

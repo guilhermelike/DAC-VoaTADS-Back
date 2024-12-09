@@ -17,6 +17,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue createEmployeeQueue() {
+        return new Queue("create.employee.queue", false);
+    }
+
+    @Bean
     public Queue createBookingQueue() {
         return new Queue("create.booking.queue", false);
     }
@@ -24,6 +29,16 @@ public class RabbitMQConfig {
     @Bean
     public Queue createBookingMilesCustomerQueue() {
         return new Queue("use.miles.customer.queue", false);
+    }
+
+    @Bean
+    public Queue createCustomerQueue() {
+        return new Queue("create.customer.queue", false);
+    }
+
+    @Bean
+    public Queue sagaCustomerSuccessQueue() {
+        return new Queue("saga.customer.success.queue", false);
     }
 
     @Bean
