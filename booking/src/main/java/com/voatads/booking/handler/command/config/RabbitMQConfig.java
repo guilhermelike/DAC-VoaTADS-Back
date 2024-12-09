@@ -14,6 +14,11 @@ public class RabbitMQConfig {
     public Queue bookingQueue() {
         return new Queue("booking.queue", false);
     }
+
+    @Bean
+    public Queue cancelBookingQueue() {
+        return new Queue("cancel.booking.queue", false);
+    }
     
     @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter() {

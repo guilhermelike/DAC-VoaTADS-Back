@@ -1,5 +1,7 @@
 package com.voatads.booking.handler.command.service;
 
+import java.util.UUID;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,14 @@ public class BookingCommandService {
         bookingDTO.setId(bookingCreated.getId()); // Relação entre as duas tabelas
         bookingCommandProducer.createBooking(bookingDTO);
         return bookingCreated;
+    }
+
+    public BookingCommand cancelBooking(UUID id) {
+        BookingCommand bookingCommand = bookingCommandRepository.findById(id).get();
+        bookingCommand.setStatus("CANCELADA");
+        bookingCommandRepository.save(bookingCommand);
+        bookingCommandProducer.cancelBooking(id);
+        return bookingCommand;
     }
 
 }

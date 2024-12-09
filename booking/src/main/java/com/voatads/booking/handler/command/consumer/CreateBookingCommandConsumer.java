@@ -32,7 +32,7 @@ public class CreateBookingCommandConsumer {
         logger.info("CodBooking: {}", codBooking);
         bookingDTO.setCodBooking(codBooking);
         bookingDTO.setTimeBooking(LocalDateTime.now());
-        bookingDTO.setStatus("CONFIRMADO");
+        bookingDTO.setStatus("RESERVADA");
         bookingCommandService.saveBooking(bookingDTO);
     }
 }

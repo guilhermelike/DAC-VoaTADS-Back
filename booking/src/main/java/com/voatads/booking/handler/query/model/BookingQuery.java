@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -23,6 +22,8 @@ public class BookingQuery {
     private String timeBooking;
     @Column
     private String status;
+    @Column
+    private UUID idUser;
 
     public UUID getId() {
         return id;
@@ -62,5 +63,13 @@ public class BookingQuery {
     
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public UUID getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(UUID idUser) {
+        this.idUser = idUser;
     }
 }

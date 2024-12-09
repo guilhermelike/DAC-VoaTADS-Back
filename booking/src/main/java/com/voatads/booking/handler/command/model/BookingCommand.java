@@ -24,7 +24,8 @@ public class BookingCommand {
     private LocalDateTime timeBooking;
     @Column
     private String status;
-
+    @Column
+    private UUID idUser;
 
     public UUID getId() {
         return id;
@@ -64,6 +65,14 @@ public class BookingCommand {
     
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public UUID getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(UUID idUser) {
+        this.idUser = idUser;
     }
     
     @Override

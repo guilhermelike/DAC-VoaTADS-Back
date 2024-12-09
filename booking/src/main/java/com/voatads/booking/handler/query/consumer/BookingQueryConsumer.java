@@ -1,5 +1,7 @@
 package com.voatads.booking.handler.query.consumer;
 
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,5 +24,11 @@ public class BookingQueryConsumer {
     public void createBooking(BookingDTO messageReceived) {
         logger.info("Recebido em consumer: {}", messageReceived.toString());
         bookingQueryService.saveBooking(messageReceived);
+    }
+
+    @RabbitListener(queues = "cancel.booking.queue")
+    public void cancelBooking(UUID id) {
+        logger.info("Recebido em consumer, cancelar reserva");
+        bookingQueryService.cancelBooking(id);
     }
 }

@@ -10,6 +10,7 @@ public class BookingDTO implements Serializable {
     private String codFlight;
     private LocalDateTime timeBooking;
     private String status;
+    private UUID idUser;
     
 //     "codFlight": "TADS103"
 // "idUser": "e1c347    private Timestamp timeBooking;cc-056b-4a76-b371-262eae7140b0"
@@ -54,6 +55,14 @@ public class BookingDTO implements Serializable {
     
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public UUID getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUSer(UUID idUser) {
+        this.idUser = idUser;
     }
 
     @Override
