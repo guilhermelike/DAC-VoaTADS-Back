@@ -85,19 +85,19 @@ public class EmployeeController {
     //     }
     // }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Employee> saveEmployee(@PathVariable UUID id, @RequestBody EmployeeDTO updatedEmployeeDTO){
-        try{
-            Employee updatedEmployee = employeeService.updateEmployee(id, updatedEmployeeDTO);
-            if (updatedEmployee != null) {
-                return ResponseEntity.ok(updatedEmployee);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    // @PutMapping("/{id}")
+    // public ResponseEntity<Employee> saveEmployee(@PathVariable UUID id, @RequestBody EmployeeDTO updatedEmployeeDTO){
+    //     try{
+    //         Employee updatedEmployee = employeeService.updateEmployee(id, updatedEmployeeDTO);
+    //         if (updatedEmployee != null) {
+    //             return ResponseEntity.ok(updatedEmployee);
+    //         } else {
+    //             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    //         }
+    //     } catch (Exception e){
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    //     }
+    // }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Employee> updateEmployeeFields(@PathVariable UUID id, @RequestBody EmployeeDTO updates) {
@@ -113,14 +113,14 @@ public class EmployeeController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> removeEmployee(@PathVariable UUID id){
-        try{
-            String message = employeeService.removeEmployee(id);
-            return ResponseEntity.ok(message);
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<String> removeEmployee(@PathVariable UUID id){
+    //     try{
+    //         String message = employeeService.removeEmployee(id);
+    //         return ResponseEntity.ok(message);
+    //     } catch (Exception e){
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    //     }
+    // }
 }
 

@@ -2,6 +2,7 @@ package com.voatads.employee.service;
 
 import com.voatads.employee.dto.CreateEmployeeDTO;
 import com.voatads.employee.dto.EmployeeDTO;
+import com.voatads.employee.dto.UpdateEmployeeDTO;
 import com.voatads.employee.model.Employee;
 import com.voatads.employee.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
@@ -42,28 +43,39 @@ public class EmployeeService {
     }
 
     @Transactional
-    public Employee updateEmployee(UUID id, EmployeeDTO employeeDTO) {
-        Employee existingEmployee = getEmployee(id);
-        if (existingEmployee != null) {
-            existingEmployee.setName(employeeDTO.getName());
-            existingEmployee.setCpf(employeeDTO.getCpf());
-            existingEmployee.setEmail(employeeDTO.getEmail());
-            existingEmployee.setNumber(employeeDTO.getNumber());
-
-            return saveEmployee(existingEmployee);
+    public Employee updateEmployee(UUID id, UpdateEmployeeDTO employeeDTO) {
+        Optional<Employee> existingEmployee = employeeRepository.findById(id);
+        if (existingEmployee.isPresent()) {
+            Employee employee = existingEmployee.get();
+            employee.setCpf(employeeDTO.getCpf());
+            employee.setName(employeeDTO.getName());
+            employee.setEmail(employeeDTO.getEmail());
+            employee.setNumber(employeeDTO.getNumber());
+            employeeRepository.save(employee);
+            return employee;
         }
         return null;
     }
 
     @Transactional
     public Employee updateEmployeeFields(UUID id, EmployeeDTO updates) {
-        Employee existingEmployee = getEmployee(id);
-        if (existingEmployee != null) {
-            if (updates.getName() != null) existingEmployee.setName(updates.getName());
-            if (updates.getEmail() != null) existingEmployee.setEmail(updates.getEmail());
-            if (updates.getCpf() != null) existingEmployee.setCpf(updates.getCpf());
-            if (updates.getNumber() != null) existingEmployee.setNumber(updates.getNumber());
-            return saveEmployee(existingEmployee);
+        Optional<Employee> existingEmployee = employeeRepository.findById(id);
+        if (existingEmployee.isPresent()) {
+            Employee employee = existingEmployee.get();
+            if (updates.getCpf() != null) {
+                employee.setCpf(updates.getCpf());
+            }
+            if (updates.getName() != null) {
+                employee.setName(updates.getName());
+            }
+            if (updates.getEmail() != null) {
+                employee.setEmail(updates.getEmail());
+            }
+            if (updates.getNumber() != null) {
+                employee.setNumber(updates.getNumber());
+            }
+            employeeRepository.save(employee);
+            return employee;
         }
         return null;
     }
