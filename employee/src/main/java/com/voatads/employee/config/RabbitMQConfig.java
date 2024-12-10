@@ -21,6 +21,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue deleteEmployeeQueue() {
+        return new Queue("delete.employee.queue", false);
+    }    
+
+    @Bean
     public Queue sagaEmployeeSuccessQueue() {
         return new Queue("saga.employee.success.queue", false);
     }

@@ -31,4 +31,7 @@ public class Employee {
 
     @Column(name = "number")
     private String number;
+
+    @Column(name = "status")
+    private String status;
 }

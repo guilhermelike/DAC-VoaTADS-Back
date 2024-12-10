@@ -47,7 +47,6 @@ public class EmployeeService {
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
         if (existingEmployee.isPresent()) {
             Employee employee = existingEmployee.get();
-            employee.setCpf(employeeDTO.getCpf());
             employee.setName(employeeDTO.getName());
             employee.setEmail(employeeDTO.getEmail());
             employee.setNumber(employeeDTO.getNumber());
@@ -62,9 +61,6 @@ public class EmployeeService {
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
         if (existingEmployee.isPresent()) {
             Employee employee = existingEmployee.get();
-            if (updates.getCpf() != null) {
-                employee.setCpf(updates.getCpf());
-            }
             if (updates.getName() != null) {
                 employee.setName(updates.getName());
             }
@@ -84,8 +80,16 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public String removeEmployee(UUID id){
-        employeeRepository.deleteById(id);
-        return "Employee removed with the id: " + id;
+    @Transactional
+    public String updateEmployeeStatus(UUID id, String status) {
+        Optional<Employee> employeeOptional = employeeRepository.findById(id);
+        if (employeeOptional.isPresent()) {
+            Employee employee = employeeOptional.get();
+            employee.setStatus(status);
+            employeeRepository.save(employee);
+            return "Employee status updated successfully";
+        } else {
+            return "Employee not found";
+        }
     }
 }

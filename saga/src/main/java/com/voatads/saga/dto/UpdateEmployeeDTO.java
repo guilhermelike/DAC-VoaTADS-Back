@@ -5,7 +5,6 @@ import java.util.UUID;
 
 public class UpdateEmployeeDTO implements Serializable {
     private UUID id;
-    private String cpf;
     private String name;
     private String email;
     private String number;
@@ -16,14 +15,6 @@ public class UpdateEmployeeDTO implements Serializable {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getName() {

@@ -27,6 +27,7 @@ public class CreateEmployeeController {
     public ResponseEntity<CreateEmployeeDTO> createEmployee(@RequestBody CreateEmployeeDTO createEmployeeDTO) {
         try {
             System.out.println("Esta em controller: ");
+            createEmployeeDTO.setStatus("Ativado");
             createEmployeeProducer.createEmployee(createEmployeeDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(createEmployeeDTO);
         } catch (Exception e) {
