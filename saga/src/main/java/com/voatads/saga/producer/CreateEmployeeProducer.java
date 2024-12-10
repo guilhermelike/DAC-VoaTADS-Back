@@ -25,4 +25,14 @@ public class CreateEmployeeProducer {
             logger.error("Erro ao enviar mensagem para criar funcionário: {}", createEmployeeDTO, e);
         }
     }
+
+    public void createAuthForEmployee(CreateEmployeeDTO createEmployeeDTO) {
+        try {
+            logger.info("Enviando mensagem para criar auth: {}", createEmployeeDTO);
+            rabbitTemplate.convertAndSend("create.auth.queue", createEmployeeDTO);
+            logger.info("Mensagem enviada com sucesso para criar auth: {}", createEmployeeDTO);
+        } catch (Exception e) {
+            logger.error("Erro ao enviar mensagem para criar auth: {}", createEmployeeDTO, e);
+        }
+    }
 }

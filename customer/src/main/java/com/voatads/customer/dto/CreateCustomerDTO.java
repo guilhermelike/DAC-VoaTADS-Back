@@ -14,7 +14,7 @@ public class CreateCustomerDTO implements Serializable {
     private String zipCode;
     private String city;
     private String state;
-    private Double miles;
+    private Double miles = 0.0;
     private String password;
 
     public UUID getId() {

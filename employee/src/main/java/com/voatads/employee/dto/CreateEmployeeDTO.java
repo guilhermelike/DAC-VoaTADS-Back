@@ -1,4 +1,4 @@
-package com.voatads.saga.dto;
+package com.voatads.employee.dto;
 
 import java.io.Serializable;
 import java.util.UUID;

@@ -62,28 +62,28 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeDTO employeeDTO){
-        logger.debug("Iniciando método createEmployee");
+    // @PostMapping
+    // public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeDTO employeeDTO){
+    //     logger.debug("Iniciando método createEmployee");
 
-        try{
-            logger.debug("Recebido EmployeeDTO: {}", employeeDTO);
+    //     try{
+    //         logger.debug("Recebido EmployeeDTO: {}", employeeDTO);
 
-            if (employeeDTO == null) {
-                logger.error("EmployeeDTO é nulo.");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
+    //         if (employeeDTO == null) {
+    //             logger.error("EmployeeDTO é nulo.");
+    //             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    //         }
 
-            logger.debug("Chamando employeeService.createEmployee");
-            Employee createdEmployee = employeeService.createEmployee(employeeDTO);
+    //         logger.debug("Chamando employeeService.createEmployee");
+    //         Employee createdEmployee = employeeService.createEmployee(employeeDTO);
 
-            logger.debug("Funcionário criado com sucesso: {}", createdEmployee);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
-        } catch (Exception e){
-            logger.error("Erro ao criar funcionário: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    //         logger.debug("Funcionário criado com sucesso: {}", createdEmployee);
+    //         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
+    //     } catch (Exception e){
+    //         logger.error("Erro ao criar funcionário: ", e);
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    //     }
+    // }
 
     @PutMapping("/{id}")
     public ResponseEntity<Employee> saveEmployee(@PathVariable UUID id, @RequestBody EmployeeDTO updatedEmployeeDTO){
