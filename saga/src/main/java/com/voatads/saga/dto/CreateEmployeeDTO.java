@@ -9,6 +9,7 @@ public class CreateEmployeeDTO implements Serializable {
     private String name;
     private String email;
     private String number;
+    private String password;
 
     public UUID getId() {
         return id;
@@ -48,5 +49,13 @@ public class CreateEmployeeDTO implements Serializable {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
