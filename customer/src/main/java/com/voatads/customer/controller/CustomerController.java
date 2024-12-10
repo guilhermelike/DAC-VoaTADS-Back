@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -134,6 +135,37 @@ public class CustomerController {
             }
         } catch (Exception e) {
             logger.error("Erro ao obter transações para o cliente com ID {}: ", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PatchMapping("/{id}/miles/buy")
+    public ResponseEntity<Customer> buyMiles(@PathVariable UUID id, @RequestBody Map<String, Double> milesMap) {
+        try {
+            double miles = milesMap.get("miles");
+            Customer updatedCustomer = customerService.updateMiles(id, miles, true);
+            if (updatedCustomer != null) {
+                return ResponseEntity.ok(updatedCustomer);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao comprar milhas para o cliente com ID {}: ", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PatchMapping("/{id}/miles/use")
+    public ResponseEntity<Customer> useMiles(@PathVariable UUID id, @RequestBody double miles) {
+        try {
+            Customer updatedCustomer = customerService.updateMiles(id, miles, false);
+            if (updatedCustomer != null) {
+                return ResponseEntity.ok(updatedCustomer);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao usar milhas para o cliente com ID {}: ", id, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

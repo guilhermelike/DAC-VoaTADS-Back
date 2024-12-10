@@ -41,6 +41,9 @@ public class CustomerService {
     @Transactional
     public Customer createCustomer(CreateCustomerDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
+        if (customer.getMiles() == null) {
+            customer.setMiles(0.0); 
+        }
         customerRepository.save(customer);
         return customerRepository.findById(customer.getId()).orElse(null);
     }
