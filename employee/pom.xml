@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.voatads</groupId>
-	<artifactId>customer</artifactId>
+	<artifactId>employee</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>customer</name>
-	<description>ms customer</description>
+	<name>employee</name>
+	<description>ms employee</description>
 	<url/>
 	<licenses>
 		<license/>
