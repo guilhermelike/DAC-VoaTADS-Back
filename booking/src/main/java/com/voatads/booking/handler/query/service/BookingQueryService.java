@@ -41,4 +41,11 @@ public class BookingQueryService {
         return bookingQuery;
     }
 
+    public BookingQuery checkinBooking(UUID id) {
+        BookingQuery bookingQuery = bookingQueryRepository.findById(id).get();
+        bookingQuery.setStatus("CONFIRMADA");
+        bookingQueryRepository.save(bookingQuery);
+        return bookingQuery;
+    }
+
 }

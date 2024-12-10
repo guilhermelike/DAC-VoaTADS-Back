@@ -31,4 +31,10 @@ public class BookingQueryConsumer {
         logger.info("Recebido em consumer, cancelar reserva");
         bookingQueryService.cancelBooking(id);
     }
+
+    @RabbitListener(queues = "checkin.booking.queue")
+    public void checkinBooking(UUID id) {
+        logger.info("Recebido em consumer, checkin reserva");
+        bookingQueryService.checkinBooking(id);
+    }
 }

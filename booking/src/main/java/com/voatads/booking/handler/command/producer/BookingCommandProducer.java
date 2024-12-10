@@ -21,4 +21,9 @@ public class BookingCommandProducer {
     public void cancelBooking(UUID id) {
         rabbitTemplate.convertAndSend("cancel.booking.queue", id);
     }
+
+    public void checkinBooking(UUID id) {
+        rabbitTemplate.convertAndSend("checkin.booking.queue", id);
+    }
+
 }

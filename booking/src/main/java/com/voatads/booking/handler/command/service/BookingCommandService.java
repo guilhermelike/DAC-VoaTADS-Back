@@ -45,4 +45,12 @@ public class BookingCommandService {
         return bookingCommand;
     }
 
+    public BookingCommand checkinBooking(UUID id) {
+        BookingCommand bookingCommand = bookingCommandRepository.findById(id).get();
+        bookingCommand.setStatus("CONFIRMADA");
+        bookingCommandRepository.save(bookingCommand);
+        bookingCommandProducer.checkinBooking(id);
+        return bookingCommand;
+    }
+
 }

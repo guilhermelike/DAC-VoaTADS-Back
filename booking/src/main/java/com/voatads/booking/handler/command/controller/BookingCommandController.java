@@ -52,7 +52,19 @@ public class BookingCommandController {
             BookingDTO bookingDTO = modelMapper.map(bookingUpdated, BookingDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(bookingDTO);
         } catch (Exception e) {
-            logger.error("Erro ao criar reserva: {}", e.getMessage());
+            logger.error("Erro ao cancelar reserva: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PatchMapping("/bookings/checkin/{id}")
+    public ResponseEntity<BookingDTO> checkinBooking(@PathVariable UUID id) {
+        try {
+            BookingCommand bookingUpdated = bookingCommandService.checkinBooking(id);
+            BookingDTO bookingDTO = modelMapper.map(bookingUpdated, BookingDTO.class);
+            return ResponseEntity.status(HttpStatus.OK).body(bookingDTO);
+        } catch (Exception e) {
+            logger.error("Erro ao realizar checkin de reserva: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
