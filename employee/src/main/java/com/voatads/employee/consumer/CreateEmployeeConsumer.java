@@ -26,10 +26,10 @@ public class CreateEmployeeConsumer {
         logger.info("Recebido em employee consumer: {}", messageReceived);
         try {
             employeeService.createEmployee(messageReceived);
-            logger.info("Cliente criado com sucesso: {}", messageReceived);
+            logger.info("Funcionario criado com sucesso: {}", messageReceived);
             rabbitTemplate.convertAndSend("saga.employee.success.queue", messageReceived);
         } catch (Exception e) {
-            logger.error("Erro ao criar cliente: {}", messageReceived, e);
+            logger.error("Erro ao criar funcionario: {}", messageReceived, e);
         }
     }
 }

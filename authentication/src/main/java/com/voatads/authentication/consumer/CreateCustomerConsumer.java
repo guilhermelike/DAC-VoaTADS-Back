@@ -19,9 +19,9 @@ public class CreateCustomerConsumer {
     @Autowired
     AuthService authService;
 
-    @RabbitListener(queues = "create.auth.queue")
+    @RabbitListener(queues = "create.auth.customer.queue")
     public void createAuthForCustomer(CreateCustomerDTO messageReceived) {
-        logger.info("Recebido em auth consumer: {}", messageReceived);
+        logger.info("Recebido em auth customer consumer: {}", messageReceived);
         try {
             String salt = EncryptPassword.createSaltForPassword();
             logger.info("Senha recebida para cadastro: {}", messageReceived.getPassword());

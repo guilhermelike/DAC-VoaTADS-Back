@@ -22,7 +22,7 @@ public class CreateAuthProducer {
     public void createAuth(CreateCustomerDTO createCustomerDTO) {
         try {
             logger.info("Enviando mensagem para criar auth: {}", createCustomerDTO);
-            rabbitTemplate.convertAndSend("create.auth.queue", createCustomerDTO);
+            rabbitTemplate.convertAndSend("create.auth.customer.queue", createCustomerDTO);
             logger.info("Mensagem enviada com sucesso para criar auth: {}", createCustomerDTO);
         } catch (Exception e) {
             logger.error("Erro ao enviar mensagem para criar auth: {}", createCustomerDTO, e);
@@ -32,7 +32,7 @@ public class CreateAuthProducer {
     public void createAuthForEmployee(CreateEmployeeDTO createEmployeeDTO) {
         try {
             logger.info("Enviando mensagem para criar auth para funcionário: {}", createEmployeeDTO);
-            rabbitTemplate.convertAndSend("create.auth.queue", createEmployeeDTO);
+            rabbitTemplate.convertAndSend("create.auth.employee.queue", createEmployeeDTO);
             logger.info("Mensagem enviada com sucesso para criar auth para funcionário: {}", createEmployeeDTO);
         } catch (Exception e) {
             logger.error("Erro ao enviar mensagem para criar auth para funcionário: {}", createEmployeeDTO, e);
