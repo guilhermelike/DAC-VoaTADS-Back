@@ -26,7 +26,7 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 # Define a porta que o serviço irá expor
-EXPOSE 8080
+EXPOSE 5002
 
 # Comando para iniciar a aplicação
 CMD ["java", "-jar", "app.jar"]

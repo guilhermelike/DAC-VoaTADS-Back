@@ -6,9 +6,9 @@ services:
       context: ./db-relacional
     container_name: postgres_db
     environment:
-      POSTGRES_USER: user           # Nome do usuário padrão
-      POSTGRES_PASSWORD: senha      # Senha do usuário
-      POSTGRES_DB: database         # Nome do banco de dados padrão
+      POSTGRES_USER: postgres           # Nome do usuário padrão
+      POSTGRES_PASSWORD: postgres      # Senha do usuário
+      POSTGRES_DB: postgres         # Nome do banco de dados padrão
     ports:
       - "5432:5432"                 # Porta padrão do PostgreSQL
     volumes:
@@ -20,8 +20,8 @@ services:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com # Usuário do pgAdmin
-      PGADMIN_DEFAULT_PASSWORD: admin         # Senha do pgAdmin
+      PGADMIN_DEFAULT_EMAIL: postgres # Usuário do pgAdmin
+      PGADMIN_DEFAULT_PASSWORD: postgres         # Senha do pgAdmin
     ports:
       - "5050:80"                             # Porta 5050 para acessar o pgAdmin no navegador
     depends_on:
@@ -33,8 +33,8 @@ services:
     image: mongo:6
     container_name: mongo_db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: pass
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
     ports:
       - "27017:27017"
     volumes:
@@ -44,13 +44,84 @@ services:
     image: mongo-express:latest
     container_name: mongo_express
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: admin # Aqui o usuário deve ser o mesmo que o do MongoDB
-      ME_CONFIG_MONGODB_ADMINPASSWORD: pass # A senha também precisa ser a mesma
+      ME_CONFIG_MONGODB_ADMINUSERNAME: mongo # Aqui o usuário deve ser o mesmo que o do MongoDB
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongo # A senha também precisa ser a mesma
       ME_CONFIG_MONGODB_SERVER: mongo       # Nome do serviço Mongo no docker-compose
     ports:
       - "8081:8081"
     depends_on:
       - mongo
+
+  # Serviço RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"   # Porta padrão do RabbitMQ
+      - "15672:15672" # Porta para acessar a interface de gerenciamento do RabbitMQ
+
+  # Serviço Saga
+  saga:
+    build:
+      context: ./saga
+    container_name: saga
+    ports:
+      - "5010:5010"
+    depends_on:
+      - rabbitmq
+
+  # Serviço Flights
+  flights:
+    build:
+      context: ./flights
+    container_name: flights
+    ports:
+      - "5004:5004"
+    depends_on:
+      - rabbitmq
+
+  # Serviço Employee
+  employee:
+    build:
+      context: ./employee
+    container_name: employee
+    ports:
+      - "5001:5001"
+    depends_on:
+      - rabbitmq
+
+  # Serviço Customer
+  customer:
+    build:
+      context: ./customer
+    container_name: customer
+    ports:
+      - "5002:5002"
+    depends_on:
+      - rabbitmq
+
+  # Serviço Booking
+  booking:
+    build:
+      context: ./booking
+    container_name: booking
+    ports:
+      - "5006:5006"
+    depends_on:
+      - rabbitmq
+
+  # Serviço Authentication
+  authentication:
+    build:
+      context: ./authentication
+    container_name: authentication
+    ports:
+      - "5000:5000"
+    depends_on:
+      - rabbitmq
 
 volumes:
   postgres_data: # Volume para persistir os dados do PostgreSQL
