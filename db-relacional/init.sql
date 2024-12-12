@@ -15,6 +15,7 @@ $$;
 \c postgres;
 
 -- Criação de uma tabela de exemplo
+DROP TABLE IF EXISTS usuarios;
 CREATE TABLE IF NOT EXISTS usuarios (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -23,7 +24,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 );
 
 -- Criação dos schemas
-CREATE SCHEMA IF NOT EXISTS bookingcommando;
+CREATE SCHEMA IF NOT EXISTS bookingcommand;
 CREATE SCHEMA IF NOT EXISTS bookingquery;
 CREATE SCHEMA IF NOT EXISTS customer;
 CREATE SCHEMA IF NOT EXISTS employee;
