@@ -1,8 +1,10 @@
 // Script de inicialização do MongoDB
 db = db.getSiblingDB("db_dac"); // Substitua "meubanco" pelo nome do banco desejado
 
+db.authentication.drop();
+
 // Criar coleção "usuarios" e inserir um documento inicial
-db.usuarios.insertMany([
+db.authentication.insertMany([
   {
     nome: "Admin",
     email: "admin@example.com",
